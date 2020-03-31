@@ -40,7 +40,7 @@ export default {
     },
     methods:{
         validateUser(){
-            this.$axios.post('localhost:3000/login',{user: "oscar",pass: "1234"})
+            this.$axios.post('http://localhost:3000/login',{user: "oscar",pass: "1234"})
             .then(res=>{
                 console.log(res)
             });
