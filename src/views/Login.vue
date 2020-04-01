@@ -16,7 +16,7 @@
                     <span class="md-helper-text">Usuario</span>
                     </md-field>    <md-field>
                     <label>Contraseña</label>
-                    <md-input v-model="contrasena"></md-input>
+                    <md-input v-model="contrasena" type="password"></md-input>
                     <span class="md-helper-text">Contraseña</span>
                     </md-field>
                     <md-button type="submit" class="md-primary">Iniciar sesion</md-button>
@@ -30,6 +30,8 @@
 </template>
 
 <script>
+
+import {require} from 'vue-validator/dist/vue-validator'
 export default {
     name: "Login",
     data(){
@@ -38,13 +40,23 @@ export default {
             contrasena: ""
         }
     },
+    validations:{
+        usuario:{
+            require
+        },
+        contrasena:{
+            require
+        }
+    },
     methods:{
         validateUser(){
-            this.$axios.post('http://localhost:3000/login',{user: "oscar",pass: "1234"})
+            this.$axios.post('http://localhost:3000/login',{usuario: this.usuario,contrasena: this.contrasena})
             .then(res=>{
-                console.log(res)
+                if(res.data==true){
+                    this.$router.push('home')
+                }
             });
-            console.log(this.usuario +" "+ this.contrasena)
+          
         }
     }
 }

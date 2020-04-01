@@ -16,12 +16,12 @@
                     <span class="md-helper-text">Nombre</span>
                     </md-field>    <md-field>
                     <label>Email</label>
-                    <md-input v-model="Usuario.email"></md-input>
+                    <md-input v-model="Usuario.Usuario"></md-input>
                     <span class="md-helper-text">Email</span>
                     </md-field>
                                         <md-field>
                     <label>Contraseña</label>
-                    <md-input v-model="Usuario.password"></md-input>
+                    <md-input v-model="Usuario.contrasena"></md-input>
                     <span class="md-helper-text">Contraseña</span>
                     </md-field>    <md-field>
                     <label>Re-Contraseña</label>
@@ -45,8 +45,8 @@ export default {
         return {
             Usuario: {
                 nombre: null,
-                email: null,
-                password: null
+                Usuario: null,
+                contrasena: null
 
                 },
             contrasena: null
@@ -54,7 +54,15 @@ export default {
     },
     methods:{
         registra(){
-            console.log("registra")
+            this.$axios.post('http://localhost:3000/registro',this.Usuario)
+            .then(res=>{
+                if(res.data===true){
+                    alert("susetful")
+                }else{
+                    alert("no se pudo completar")
+                }
+            });
+            console.log(this.Usuario.nombre)
         }
     }
 }

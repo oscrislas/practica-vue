@@ -11,8 +11,11 @@ import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.min.css'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+
+import Validate from 'validate'
 Vue.prototype.$axios = axios
 
+Vue.use(Validate)
 Vue.use(MdButton)
 Vue.use(MdContent)
 Vue.use(MdTabs)
