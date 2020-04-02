@@ -1,16 +1,30 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    <div v-if="menuV">
+<my-menu></my-menu>
+    </div>
+    
+    <router-view ></router-view>
   </div>
 </template>
 
 <script>
-
+import menu from '@/components/menu'
 
 export default {
   name: 'App',
   components: {
-    
+    'my-menu':menu
+  },
+  data(){
+    return {
+      menuV: true
+      }
+  },
+  methods:{
+    cambi(){
+      console.log("cambiado")
+    }
   }
 }
 </script>
