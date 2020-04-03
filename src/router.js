@@ -4,7 +4,6 @@ import Router from 'vue-router'
 import Login from '@/views/Login'
 import Registro from '@/views/Register'
 import Home from '@/views/Page'
-import servicio from '@/views/servicio'
 
 
 Vue.use(Router)
@@ -25,11 +24,6 @@ export default new Router({
         path: '/home',
         name: 'home',
         component: Home
-    },
-    {
-        path: '/servicio',
-        name: 'servicio',
-        component: servicio
     }
     ]
 })

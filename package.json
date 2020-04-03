@@ -12,6 +12,7 @@
     "bootstrap": "^4.4.1",
     "bootstrap-vue": "^2.9.0",
     "core-js": "^3.6.4",
+    "google-maps-api-loader": "^1.1.1",
     "stylus-loader": "^3.0.2",
     "validate": "^5.1.0",
     "vue": "^2.6.11",
