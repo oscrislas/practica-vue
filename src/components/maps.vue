@@ -17,9 +17,10 @@ export default {
     mapConfig () {
       return {
         ...mapSettings,
-        center: { lat: -30, lng: 0 }
+        
       }
     },
   },
+  
 }
 </script>

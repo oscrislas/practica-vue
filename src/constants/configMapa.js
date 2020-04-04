@@ -6,7 +6,11 @@ const mapSettings = {
   mapTypeControl: false,
   zoom: 10,
   minZoom: 0,
-  maxZoom: 100
+  maxZoom: 100,
+  center: {
+    lat: 30,
+    lng: 30
+  }
 };
- 
+
 export { mapSettings};

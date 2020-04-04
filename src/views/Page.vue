@@ -4,7 +4,7 @@
 <div class="row">
   
   <div class="col-3">
-
+    <costos-Servicios></costos-Servicios>
   </div>
   <div class="col-6">
 <h1>plomero</h1>
@@ -32,7 +32,7 @@
 
   </div>
   <div class="col-3">
-
+    <especialistas></especialistas>
   </div>
 
 </div>
@@ -44,6 +44,8 @@
 <script>
 import menu from '@/components/menu'
 import mapas from '@/components/maps'
+import costosServicios from '@/components/costosServicios'
+import especialistas from '@/components/especialistas'
 export default {
     name: 'page',
     data(){
@@ -53,7 +55,9 @@ export default {
     },
     components: {
     'my-menu':menu,
-    'my-mapas':mapas
+    'my-mapas':mapas,
+    'costos-Servicios':costosServicios,
+    'especialistas': especialistas
     },
     methods:{
 
