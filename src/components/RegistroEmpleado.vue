@@ -31,7 +31,7 @@
                     </md-field>
                     <md-field>
                     <label>Contraseña</label>
-                    <md-input v-model="Usuario.Contrasena"></md-input>
+                    <md-input type="password" v-model="Usuario.Contrasena"></md-input>
                     <span class="md-helper-text">Contraseña</span>
                     </md-field>
                     <md-button type="submit" v-if="id==null" class="md-primary">Registrar</md-button>

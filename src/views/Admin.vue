@@ -24,8 +24,8 @@
                     <td>{{e.Apellidos}} </td>
                     <td>{{e.Correo}}</td>
                     <td>{{e.Telefono}}</td>
-                    <td>entrada</td>
-                    <td>salida</td>
+                    <td>{{e.FechaInicio | hora}}</td>
+                    <td>{{e.FechaFin | hora}}</td>
                     <th><b-button v-b-modal.modal-2 v-on:click="precionado(index)">Editar</b-button></th>
                     <th><b-button v-on:click="borrar(e.id)">Borrar</b-button></th>
                   
@@ -65,6 +65,16 @@ export default {
             User:[],
             row: 0,
             id:0
+        }
+    },
+    filters:{
+        hora: function(value){
+            if(value==""){
+                return "Sin checar"
+            }
+            var res =value.split(":");
+
+         return parseInt(res[1], 10)%12+":"+res[2]+" "+ (parseInt(res[1], 10)%12==0?"am":"pm")
         }
     },
     beforeCreate(){

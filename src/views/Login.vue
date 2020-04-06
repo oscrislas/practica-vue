@@ -2,9 +2,9 @@
 <div class="container">
 
     <div class="row">
-            <div class="col-3">1</div>
-            <div class="col-6"  :class="{'tex':usuario.length<4}">Login</div>
-            <div class="col-3">3</div>
+            <div class="col-3"></div>
+            <div class="col-6"  :class="{'':usuario.length<4}">Login</div>
+            <div class="col-3"></div>
     </div>
     <div class="row">
             <div class="col-3"></div>
@@ -48,8 +48,10 @@ export default {
         validateUser(){
             this.$axios.post('http://localhost:3000/login',{usuario: this.usuario,contrasena: this.contrasena})
             .then(res=>{
-                if(res.data==true){
-                    this.$router.push('home')
+                if(res.data.id!=""){
+                    console.log(res.data)
+                    this.$router.push('user')
+                    localStorage.setItem('token', JSON.stringify(res.data))
                     
                 }else{
                     this.$notify({

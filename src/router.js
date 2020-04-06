@@ -5,7 +5,7 @@ import Login from '@/views/Login'
 import Registro from '@/views/Register'
 import Home from '@/views/Page'
 import admin from '@/views/Admin'
-
+import cliente from '@/views/Empleado'
 
 Vue.use(Router)
 
@@ -30,6 +30,11 @@ export default new Router({
         path: '/admin',
         name: 'admin',
         component: admin
+    },
+    {
+        path: '/user',
+        name: 'empleado',
+        component: cliente
     }
     ]
 })
