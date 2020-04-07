@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-
     
     <router-view ></router-view>
   </div>
@@ -10,18 +9,7 @@
 
 
 export default {
-  name: 'App',
-
-  data(){
-    return {
-      menuV: true
-      }
-  },
-  methods:{
-    cambi(){
-      console.log("cambiado")
-    }
-  }
+  name: 'App'
 }
 </script>
 
@@ -32,7 +20,14 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  padding-top: 60px;
   position: relative;
+  background-image: url('./assets/b.jpg');
+  background-repeat: repeat;
+  background-size: cover;
+  height: 700px;
+ 
+
+  
 }
 </style>

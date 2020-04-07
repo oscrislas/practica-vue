@@ -1,9 +1,9 @@
-<template>
-<div class="container">
+<template >
+<div class="container ">
 
     <div class="row">
             <div class="col-3"></div>
-            <div class="col-6"  :class="{'':usuario.length<4}">Login</div>
+            <div class="col-6"  >Login</div>
             <div class="col-3"></div>
     </div>
     <div class="row">
@@ -12,10 +12,12 @@
                 <form @submit.prevent="validateUser">
                     <div class="form-grup">
                         <md-field>
-                        <label>Usuario</label>
-                        <md-input  v-model="usuario" class="form-control"></md-input>
-                        <span class="md-helper-text">Usuario</span>
-                        </md-field>    <md-field>
+                        <label >Usuario</label>
+                        <md-input  v-model="usuario" class="form-control"  ></md-input>
+                        <span class="md-helper-text" >Usuario</span>
+                        <p v-bind:class="false?'valido ' : 'invalido'"></p>
+                        </md-field>    
+                        <md-field>
                         <label>Contraseña</label>
                         <md-input v-model="contrasena" class="form-control" type="password"></md-input>
                         <span class="md-helper-text">Contraseña</span>
@@ -50,8 +52,14 @@ export default {
             .then(res=>{
                 if(res.data.id!=""){
                     console.log(res.data)
-                    this.$router.push('user')
-                    localStorage.setItem('token', JSON.stringify(res.data))
+                    if(res.data.admin==="Admin"){
+                        this.$router.push('admin')
+                        localStorage.setItem('admin', JSON.stringify(res.data))
+                    }else{
+                        this.$router.push('user')
+                        localStorage.setItem('token', JSON.stringify(res.data))
+                    }
+
                     
                 }else{
                     this.$notify({
@@ -71,22 +79,27 @@ export default {
         }
     },
     computed: {
-    ssubmitStatus: function () {
-      if(this.usuario!=""&&this.contrasena!=""){
-          console.log("true")
-        return false
-      }else{
-     console.log("false")
-            return true
-      }
-           
-    }
+        ssubmitStatus: function () {
+            if(this.usuario!=""&&this.contrasena!=""){
+                console.log("true")
+                return false
+            }else{
+            console.log("false")
+                    return true
+            }
+            
+        }
     }
 }
 </script>
 
 <style>
-.tex {
-  background-color: red;
+.valido{
+    color: green;
 }
+.invalido{
+
+    color: red;
+}
+
 </style>

@@ -5,10 +5,12 @@
         </div>
         <div class="col-10">
             <b-button v-b-modal.modal-1 >Agregar Empleado</b-button>
+            <b-button v-on:click="Salir">Salir</b-button>
+            <p>Hola {{Admin.Nombre}} {{Admin.Apellidos}}</p>
             
             <br>
             <br>
-            <table >
+            <table class="table-dark tabla" >
                 <tr>
                     <th>Nombre</th>
                     <th>Apellido</th>
@@ -23,11 +25,11 @@
                     <td>{{e.Nombre}}</td>
                     <td>{{e.Apellidos}} </td>
                     <td>{{e.Correo}}</td>
-                    <td>{{e.Telefono}}</td>
+                    <td>{{e.Telefono | tel}}</td>
                     <td>{{e.FechaInicio | hora}}</td>
                     <td>{{e.FechaFin | hora}}</td>
-                    <th><b-button v-b-modal.modal-2 v-on:click="precionado(index)">Editar</b-button></th>
-                    <th><b-button v-on:click="borrar(e.id)">Borrar</b-button></th>
+                    <th><b-button v-b-modal.modal-2 v-on:click="precionado(index)" class="b">Editar</b-button></th>
+                    <th><b-button v-on:click="borrar(e.id)" class="b">Borrar</b-button></th>
                   
                 </tr>
             </table>
@@ -40,10 +42,10 @@
 
 </div>
 
-<b-modal id="modal-1" hide-footer title="Registro Empleado">
+<b-modal id="modal-1" hide-footer title="Registro Empleado" @hidden="closemodal" @ok="closemodal">
   <my-registro></my-registro>
 </b-modal>
-<b-modal id="modal-2" hide-footer title="Actuliza Empleado">
+<b-modal id="modal-2" hide-footer title="Actuliza Empleado" @hidden="closemodal">
   <my-registro  v-bind:id="id" > </my-registro>
 </b-modal>
 
@@ -64,28 +66,47 @@ export default {
         return {
             User:[],
             row: 0,
-            id:0
+            id:0,
+            Admin:{
+                Nombre:"",
+                Apellidos:"",
+                Admin:""
+            }
         }
     },
     filters:{
         hora: function(value){
-            if(value==""){
+            if(value=="Sin Checar"){
                 return "Sin checar"
             }
             var res =value.split(":");
 
-         return parseInt(res[1], 10)%12+":"+res[2]+" "+ (parseInt(res[1], 10)%12==0?"am":"pm")
+         return parseInt(res[1], 10)%12+":"+res[2]+" "+ (parseInt(res[1], 10)/12>1?"pm":"am")
+        },
+        tel: function(value){
+            if(value.length==10){
+            value='('+value
+            var uno=value.slice(0, -7);
+            var dos=value.slice(-7,-4);
+            var tres= value.slice(-4)
+            return  uno+') '+dos+" "+tres
+            }
+            return "Incorrecto"
+
         }
     },
-    beforeCreate(){
+    mounted(){
 
+
+        if (localStorage.getItem('admin')){
+            this.Admin = JSON.parse(localStorage.getItem('admin'));
             this.$axios.get('http://localhost:3000/Empleados')
-            .then(res=>{
-               // this.User = JSON.parse(res.data);
-            this.User=res.data
-            });
-        //console.log(JSON.parse(this.User))
-        //console.log(JSON.stringify(user))
+                .then(res=>{this.User=res.data});
+
+        }
+        else{
+            this.$router.push('/')
+        }
     },
     methods:{
         precionado(index){
@@ -99,6 +120,16 @@ export default {
                // this.User = JSON.parse(res.data);
             this.User=res.data
             });
+            console.log(this.User)
+        },
+        Salir(){
+            console.log("salio")
+            localStorage.removeItem('admin')
+            this.$router.push('/')
+        },
+        closemodal(){
+            this.$axios.get('http://localhost:3000/Empleados')
+                .then(res=>{this.User=res.data});
         }
     }
 
@@ -107,11 +138,33 @@ export default {
 </script>
 
 <style scoped>
-.table{
-    margin: 50px;
+.table,th,td{
+  padding: 10px;
+  text-align: left;
+  border: solid black;
+ 
+
+}
+
+tr:hover {
+    background-color: black;
+    border-radius: 100% solid black;
+}
+.th{
+    width: 10px;
+    background-color: black;
+    
 }
 .center{
     position: fixed;
+}
+.tabla{
+    opacity: .9;
+    font-size: 15px;
+}
+.b{
+    opacity: .9;
+    font-size: 14px;
 }
 </style>
 

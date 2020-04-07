@@ -21,7 +21,7 @@
                     </md-field>
                     <md-field>
                     <label>Telefono</label>
-                    <md-input v-model="Usuario.Telefono"></md-input>
+                    <md-input  type="number" v-model="Usuario.Telefono"></md-input>
                     <span class="md-helper-text">Telefono</span>
                     </md-field>    
                     <md-field>
@@ -35,13 +35,13 @@
                     <span class="md-helper-text">Contraseña</span>
                     </md-field>
                     <md-button type="submit" v-if="id==null" class="md-primary">Registrar</md-button>
-                    <md-button type="submit" v-if="id!=null" class="md-primary">{{id}}Actuliza</md-button>
+                    <md-button type="submit" v-if="id!=null" class="md-primary">Actuliza</md-button>
                 </form>
 
             </div>
             <div class="col-3"></div>
     </div>
-            
+<notifications group="foo" />
 </div>
 </template>
 
@@ -68,14 +68,19 @@ export default {
             this.$axios.post('http://localhost:3000/Empleado',this.Usuario)
             .then(res=>{
                 if(res.data===true){
-                    alert("susetful")
+                    this.$notify({
+                    group: 'foo',
+                    title: 'Exito',
+                    text: 'Operacion Exitosa'
+                    });
                 }else{
-                    alert("no se pudo completar")
+                    this.$notify({
+                    group: 'foo',
+                    title: 'Fallo',
+                    text: 'Ubo un error intente nuevamente'
+                    });
                 }
             });
-            console.log(this.Usuario.nombre)
-        },
-        getEmpleado(){
 
         }
 
@@ -98,6 +103,8 @@ console.log("montado")
 
 </script>
 
-<style lang="stylus" scoped>
-
+<style >
+.red{
+    background-color: red;
+}
 </style>
