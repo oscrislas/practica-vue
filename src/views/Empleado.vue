@@ -16,25 +16,7 @@
             <b-button v-on:click="Salir">Salir</b-button>
             <br>
             <br>
-            <table v-if="false" class="table-dark">
-                <tr>
-                    <th>Hora</th>
-                    <th>Lunes</th>
-                    <th>Marte</th>
-                    <th>Miercoles</th>
-                    <th>Jueves</th>
-                    <th>Viernes</th>
-                </tr>
-                 <tr >
-                     <th>Entrada</th>
-                     
-                 </tr>
-                 <tr>
-                     <th>
-                         Salida
-                     </th>
-                 </tr>
-            </table>
+            
         </div>
         <div class="col-2"></div>
         <notifications group="foo" />
