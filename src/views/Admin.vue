@@ -79,9 +79,10 @@ export default {
             if(value=="Sin Checar"){
                 return "Sin checar"
             }
-            var res =value.split(":");
+            var ret=value.split(" ");
+            var res =ret[1].split(":");
 
-         return parseInt(res[1], 10)%12+":"+res[2]+" "+ (parseInt(res[1], 10)/12>1?"pm":"am")
+         return ((parseInt(res[0], 10)>12)?(parseInt(res[0], 10)-12):(parseInt(res[0], 10)))+":"+res[1]+" "+ (parseInt(res[0], 10)/12>1?"pm":"am")
         },
         tel: function(value){
             if(value.length==10){

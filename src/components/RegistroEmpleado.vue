@@ -34,8 +34,8 @@
                     <md-input type="password" v-model="Usuario.Contrasena"></md-input>
                     <span class="md-helper-text">Contraseña</span>
                     </md-field>
-                    <md-button type="submit" v-if="id==null" class="md-primary">Registrar</md-button>
-                    <md-button type="submit" v-if="id!=null" class="md-primary">Actuliza</md-button>
+                    <md-button type="submit" :disabled="ssubmit"  v-if="id==null" class="md-primary">Registrar</md-button>
+                    <md-button type="submit" :disabled="submit" v-if="id!=null" class="md-primary">Actuliza</md-button>
                 </form>
 
             </div>
@@ -53,15 +53,25 @@ export default {
         return {
             registro: true,
             Usuario: {
-                Id: null,
-                Nombre: null,
-                Apellidos: null,
-                Telefono: null,
-                Correo: null,
-                Contrasena: null,
-                Admin: null
-                }
+                Id: "",
+                Nombre: "",
+                Apellidos: "",
+                Telefono: "",
+                Correo: "",
+                Contrasena: "",
+                Admin: ""
+                },
+            Usuario2:{
+                Id: "",
+                Nombre: "",
+                Apellidos: "",
+                Telefono: "",
+                Correo: "",
+                Contrasena: "",
+                Admin: ""
+            },
         }
+                
     },
     methods:{
         registra(){
@@ -85,6 +95,24 @@ export default {
         }
 
     },
+    computed:{
+        ssubmit: function(){
+            if(this.Usuario.Correo!=""&&this.Usuario.Contrasena!=""){
+                console.log("conputed false")
+                return false
+            }
+            console.log("computed true")
+            return true
+        },
+        submit: function(){
+            console.log("2 entro")
+            if(JSON.stringify(this.Usuario)==JSON.stringify(this.Usuario2)){
+                console.log(JSON.stringify(this.Usuario)+" "+JSON.stringify(this.Usuario2))
+                return true
+            }
+            return false
+        }
+    },
     mounted(){
         console.log("el id es "+this.id)
         if(this.id!=null){
@@ -92,9 +120,12 @@ export default {
             .then(res=>{
                // this.User = JSON.parse(res.data);
             this.Usuario=res.data
-            console.log(this.Usuario)
+
+            this.Usuario2= Object.assign({},this.Usuario)
+           
             });
         }
+    
         
 console.log("montado")
     }

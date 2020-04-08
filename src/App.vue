@@ -25,7 +25,8 @@ export default {
   background-image: url('./assets/b.jpg');
   background-repeat: repeat;
   background-size: cover;
-  height: 700px;
+  width: 100%;
+  height: 1000px;
  
 
   

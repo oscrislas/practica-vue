@@ -3,10 +3,11 @@
         <div class="col-2"></div>
         <br>
         <div class="col-4">
-            <p>Hola {{User.Nombre}} {{User.Apellidos}} preciona el buton para checar Asistencia</p>
-               <b-button class="b" v-on:click="Entrada"> 
-                   <p v-if="check==false">Checar Entrada</p> 
-                   <p v-else>Checar salida</p>
+            <p v-if="check==false">Hola {{User.Nombre}} {{User.Apellidos}} preciona el buton para checar tu hora de entrada</p>
+            <p  v-else>Hola {{User.Nombre}} {{User.Apellidos}} preciona el buton para checar tu hora de salida</p>
+               <b-button class="b" v-on:click="Entrada" v-if="check==false"> Checar Entrada
+                </b-button>
+                <b-button class="b" v-on:click="Entrada" v-else> Checar Salida
                 </b-button>
         </div>
 
@@ -15,7 +16,7 @@
             <b-button v-on:click="Salir">Salir</b-button>
             <br>
             <br>
-            <table class="table-dark">
+            <table v-if="false" class="table-dark">
                 <tr>
                     <th>Hora</th>
                     <th>Lunes</th>
@@ -36,6 +37,7 @@
             </table>
         </div>
         <div class="col-2"></div>
+        <notifications group="foo" />
     </div>
 </template>
 
@@ -65,9 +67,10 @@ beforeMount(){
         }
             this.$axios.post('http://localhost:3000/check',this.User)
             .then(res=>{
-                console.log(res.data)
-                if(res.Body==true){
+                if(res.data==true){
                     this.check=true
+                }else{
+                     this.check=false
                 }
 
             });
@@ -77,9 +80,17 @@ beforeMount(){
         Entrada(){
             this.$axios.post('http://localhost:3000/registroEntrada',this.User)
             .then(res=>{
-                console.log(res.Body)
+                console.log(res.data)
+                var d = new Date();
+              
+                this.$notify({
+                    group: 'foo',
+                    title: 'Check',
+                    text: "Checado a la hora "+d.getHours()+":"+d.getMinutes()
+                });
             });
-            console.log("checado")
+         
+            
         },
         Salir(){
             console.log("salio")
