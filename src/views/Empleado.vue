@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import VueJwtDecode from 'vue-jwt-decode'
 export default {
     name: 'empleado',
     data(){
@@ -41,7 +42,7 @@ beforeMount(){
 },
     mounted(){
         if (localStorage.getItem('token')){
-             this.User = JSON.parse(localStorage.getItem('token'));
+             this.User = VueJwtDecode.decode(localStorage.getItem('token')).Username;
              //console.log(JSON.parse(localStorage.getItem('token')))
         }
         else{

@@ -4,7 +4,7 @@
 
         </div>
         <div class="col-10">
-            <b-button v-b-modal.modal-1 >Agregar Empleado</b-button>
+            <b-button v-b-modal.modal-1 class="b">Agregar Empleado</b-button>
             <b-button v-on:click="Salir">Salir</b-button>
             <p>Hola {{Admin.Nombre}} {{Admin.Apellidos}}</p>
             
@@ -42,11 +42,11 @@
 
 </div>
 
-<b-modal id="modal-1" hide-footer title="Registro Empleado" @hidden="closemodal" @ok="closemodal">
-  <my-registro></my-registro>
+<b-modal id="modal-1" hide-footer title="Registro Empleado" @hidden="closemodal" >
+  <my-registro v-bind:Usuario="Usuario"></my-registro>
 </b-modal>
 <b-modal id="modal-2" hide-footer title="Actuliza Empleado" @hidden="closemodal">
-  <my-registro  v-bind:id="id" > </my-registro>
+  <my-registro  v-bind:Usuario="U" > </my-registro>
 </b-modal>
 
     </div>
@@ -56,6 +56,7 @@
 </template>
 
 <script>
+import VueJwtDecode from 'vue-jwt-decode'
 import registroEmpleado from '@/components/RegistroEmpleado'
 export default {
     name: 'registroEmpleado',
@@ -65,8 +66,18 @@ export default {
     data(){
         return {
             User:[],
+            Usuario:{
+                Id: '',
+                Nombre: '',
+                Apellidos: '',
+                Telefono: '',
+                Correo: '',
+                Contrasena: '',
+                Admin: ''
+            },
             row: 0,
             id:0,
+            U:0,
             Admin:{
                 Nombre:"",
                 Apellidos:"",
@@ -99,8 +110,8 @@ export default {
     mounted(){
 
 
-        if (localStorage.getItem('admin')){
-            this.Admin = JSON.parse(localStorage.getItem('admin'));
+        if (localStorage.getItem('token')){
+            this.Admin  = VueJwtDecode.decode(localStorage.getItem('token')).Username;
             this.$axios.get('http://localhost:3000/Empleados')
                 .then(res=>{this.User=res.data});
 
@@ -112,7 +123,7 @@ export default {
     methods:{
         precionado(index){
             if(index!=null)
-           this.id= this.User[index].id
+           this.U= this.User[index]
         },
         borrar(id){
             console.log("el id es: "+ id)

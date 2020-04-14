@@ -34,8 +34,8 @@
                     <md-input type="password" v-model="Usuario.Contrasena"></md-input>
                     <span class="md-helper-text">Contraseña</span>
                     </md-field>
-                    <md-button type="submit" :disabled="ssubmit"  v-if="id==null" class="md-primary">Registrar</md-button>
-                    <md-button type="submit" :disabled="submit" v-if="id!=null" class="md-primary">Actuliza</md-button>
+                    <md-button type="submit" :disabled="ssubmit"  v-if="Usuario.id==null" class="md-primary">Registrar</md-button>
+                    <md-button type="submit" :disabled="submit" v-if="Usuario.id!=null" class="md-primary">Actuliza</md-button>
                 </form>
 
             </div>
@@ -48,19 +48,10 @@
 <script>
 export default {
     name: 'registros',
-    props: ['id'],
+    props: ['Usuario'],
     data(){
         return {
             registro: true,
-            Usuario: {
-                Id: "",
-                Nombre: "",
-                Apellidos: "",
-                Telefono: "",
-                Correo: "",
-                Contrasena: "",
-                Admin: ""
-                },
             Usuario2:{
                 Id: "",
                 Nombre: "",
@@ -91,7 +82,7 @@ export default {
                     });
                 }
             });
-
+        this.Usuario="";
         }
 
     },
@@ -106,6 +97,7 @@ export default {
         },
         submit: function(){
             console.log("2 entro")
+
             if(JSON.stringify(this.Usuario)==JSON.stringify(this.Usuario2)){
                 console.log(JSON.stringify(this.Usuario)+" "+JSON.stringify(this.Usuario2))
                 return true
@@ -114,18 +106,10 @@ export default {
         }
     },
     mounted(){
-        console.log("el id es "+this.id)
-        if(this.id!=null){
-                    this.$axios.post('http://localhost:3000/getEmpleado', this.id)
-            .then(res=>{
-               // this.User = JSON.parse(res.data);
-            this.Usuario=res.data
 
             this.Usuario2= Object.assign({},this.Usuario)
            
-            });
-        }
-    
+ 
         
 console.log("montado")
     }

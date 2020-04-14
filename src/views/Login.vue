@@ -36,28 +36,30 @@
 </template>
 
 <script>
-
+import VueJwtDecode from 'vue-jwt-decode'
 export default {
     name: "Login",
     data(){
         return {
             usuario: "",
             contrasena: "",
-            submitStatus: true
+            submitStatus: true,
+            token: null
         }
     },
     methods:{
         validateUser(){
             this.$axios.post('http://localhost:3000/login',{usuario: this.usuario,contrasena: this.contrasena})
             .then(res=>{
-                if(res.data.id!=""){
+                this.token=VueJwtDecode.decode(res.data.token).Username
+                if(this.token.id!=""){
                     console.log(res.data)
-                    if(res.data.admin==="Admin"){
+                    if(this.token.admin==="Admin"){
                         this.$router.push('admin')
-                        localStorage.setItem('admin', JSON.stringify(res.data))
+                        localStorage.setItem('token', res.data.token)
                     }else{
                         this.$router.push('user')
-                        localStorage.setItem('token', JSON.stringify(res.data))
+                        localStorage.setItem('token', res.data.token)
                     }
 
                     
@@ -72,7 +74,7 @@ export default {
                     this.$notify({
                     group: 'foo',
                     title: 'Error al Iniciar sesión',
-                    text: error
+                    text: "catch"+error
                     });
             });
           
