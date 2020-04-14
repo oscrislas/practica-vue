@@ -37,8 +37,8 @@
                     <td>{{e.telefono | tel}}</td>
                     <td>{{e.fechaInicio | hora}}</td>
                     <td>{{e.fechaFin | hora}}</td>
-                    <td> <b-button v-b-modal.modal-2 v-on:click="precionado(index)" class="b">Editar</b-button></td>
-                    <td><b-button v-on:click="borrar(e.id)" class="b">Borrar</b-button></td>
+                    <td> <b-button v-b-modal.modal-2 v-on:click="precionado(index)" >Editar</b-button></td>
+                    <td><b-button v-on:click="borrar(e.id)" >Borrar</b-button></td>
                   
                 </tr>
             </table>
