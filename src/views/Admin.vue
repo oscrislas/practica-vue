@@ -1,16 +1,25 @@
 <template>
+<div>
+
+        <div class="main"><h1>Hola {{Admin.nombre}} {{Admin.apellidos}}</h1>
+            <div class="b">
+                <b-button v-b-modal.modal-1  >Agregar Empleado</b-button>
+                <b-button v-on:click="Salir" >Salir</b-button>
+            </div>
+
+        </div>
     <div class="row">
+
         <div class="col-1">
 
         </div>
         <div class="col-10">
-            <b-button v-b-modal.modal-1 class="b">Agregar Empleado</b-button>
-            <b-button v-on:click="Salir">Salir</b-button>
-            <p>Hola {{Admin.nombre}} {{Admin.apellidos}}</p>
+
+    
             
             <br>
             <br>
-            <table class="table-dark tabla" >
+            <table >
                 <tr>
                     <th>Nombre</th>
                     <th>Apellido</th>
@@ -28,8 +37,8 @@
                     <td>{{e.telefono | tel}}</td>
                     <td>{{e.fechaInicio | hora}}</td>
                     <td>{{e.fechaFin | hora}}</td>
-                    <th><b-button v-b-modal.modal-2 v-on:click="precionado(index)" class="b">Editar</b-button></th>
-                    <th><b-button v-on:click="borrar(e.id)" class="b">Borrar</b-button></th>
+                    <td> <b-button v-b-modal.modal-2 v-on:click="precionado(index)" class="b">Editar</b-button></td>
+                    <td><b-button v-on:click="borrar(e.id)" class="b">Borrar</b-button></td>
                   
                 </tr>
             </table>
@@ -52,11 +61,12 @@
     </div>
 
 
-    
+    </div>
 </template>
 
 <script>
 import VueJwtDecode from 'vue-jwt-decode'
+
 import registroEmpleado from '@/components/RegistroEmpleado'
 export default {
     name: 'registroEmpleado',
@@ -82,7 +92,8 @@ export default {
                 Nombre:"",
                 Apellidos:"",
                 Admin:""
-            }
+            },
+            token: null
         }
     },
     filters:{
@@ -114,10 +125,10 @@ export default {
         }
     },
     mounted(){
+this.Admin  = VueJwtDecode.decode(localStorage.getItem('token')).Username;
 
-
-        if (localStorage.getItem('token')){
-            this.Admin  = VueJwtDecode.decode(localStorage.getItem('token')).Username;
+        if (this.Admin.admin==="Admin"){
+            
             this.$axios.get('http://localhost:3000/Empleados',{ headers: { 
                 'Authorization': "Bearer "+localStorage.getItem('token'),
                 'Content-Type': 'application/json' } })
@@ -152,7 +163,7 @@ export default {
         },
         Salir(){
             console.log("salio")
-            localStorage.removeItem('admin')
+            localStorage.removeItem('token')
             this.$router.push('/')
         },
         closemodal(){
@@ -168,33 +179,53 @@ export default {
 </script>
 
 <style scoped>
-.table,th,td{
+table{
+border-collapse: separate !important;
+      opacity: .8 !important;
+    font-size: 15px;
+  text-align: left;
+  color: aliceblue;
+  border-radius: 15px;
+  border: solid black;
+background-color: #001F49;
+  position: absolute;
+  width: 100%;
+  margin:  auto;
+
+}
+th{
   padding: 10px;
   text-align: left;
+  
+  background-color: black;
+}
+td{
+    padding-left: 10px;
+    text-align: left;
+
   border: solid black;
- 
 
 }
 
 tr:hover {
-    background-color: black;
+    background-color: #01295F;
     border-radius: 100% solid black;
 }
-.th{
-    width: 10px;
-    background-color: black;
-    
+
+h1{
+  position: absolute;
+  left: 10px;
 }
-.center{
-    position: fixed;
-}
-.tabla{
-    opacity: .9;
-    font-size: 15px;
-}
+
 .b{
-    opacity: .9;
-    font-size: 14px;
+position: absolute;
+  right: 10px;
+  width: 300px;
+  height: auto;
+  display: inline;
 }
+
+
+
 </style>
 

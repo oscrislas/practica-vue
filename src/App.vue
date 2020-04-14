@@ -31,4 +31,21 @@ export default {
 
   
 }
+.main{
+    background-color: #001F49;
+    padding: 20px;
+    color: white;
+    border-radius: 10px;
+    padding-left: 0px;
+    box-shadow: 10px 10px 5px 0px black;
+    text-shadow: 0.5em 0.5em 0.10em black;
+    font-family: "Homer Simpson UI";
+    position: relative;
+    width: auto;
+    height: 90px;
+   
+    
+   
+}
+
 </style>
