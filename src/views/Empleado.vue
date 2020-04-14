@@ -3,8 +3,8 @@
         <div class="col-2"></div>
         <br>
         <div class="col-4">
-            <p v-if="check==false">Hola {{User.Nombre}} {{User.Apellidos}} preciona el buton para checar tu hora de entrada</p>
-            <p  v-else>Hola {{User.Nombre}} {{User.Apellidos}} preciona el buton para checar tu hora de salida</p>
+            <p v-if="check==false">Hola {{User.nombre}} {{User.apellidos}} preciona el buton para checar tu hora de entrada</p>
+            <p  v-else>Hola {{User.nombre}} {{User.apellidos}} preciona el buton para checar tu hora de salida</p>
                <b-button class="b" v-on:click="Entrada" v-if="check==false"> Checar Entrada
                 </b-button>
                 <b-button class="b" v-on:click="Entrada" v-else> Checar Salida
@@ -30,11 +30,11 @@ export default {
     data(){
         return{
             User: {
-                Nombre: "",
-                Apellidos: "",
-                Correo: ""
+                nombre: "",
+                apellidos: "",
+                correo: ""
             },
-            check: true
+            check: false
         }
     },
 beforeMount(){
@@ -48,7 +48,9 @@ beforeMount(){
         else{
             this.$router.push('/')
         }
-            this.$axios.post('http://localhost:3000/check',this.User)
+            this.$axios.post('http://localhost:3000/check',this.User,{ headers: { 
+                'Authorization': "Bearer "+localStorage.getItem('token'),
+                'Content-Type': 'application/json' } })
             .then(res=>{
                 if(res.data==true){
                     this.check=true
@@ -61,7 +63,9 @@ beforeMount(){
     },
     methods:{
         Entrada(){
-            this.$axios.post('http://localhost:3000/registroEntrada',this.User)
+            this.$axios.post('http://localhost:3000/registroEntrada',this.User,{ headers: { 
+                'Authorization': "Bearer "+localStorage.getItem('token'),
+                'Content-Type': 'application/json' } })
             .then(res=>{
                 console.log(res.data)
                 var d = new Date();
@@ -71,6 +75,7 @@ beforeMount(){
                     title: 'Check',
                     text: "Checado a la hora "+d.getHours()+":"+d.getMinutes()
                 });
+                this.check=true
             });
          
             

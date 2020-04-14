@@ -12,30 +12,30 @@
                 <form @submit.prevent="registra">
                     <md-field>
                     <label>Nombre</label>
-                    <md-input v-model="Usuario.Nombre"></md-input>
+                    <md-input v-model="Usuario2.nombre"></md-input>
                     <span class="md-helper-text">Nombre</span>
                     </md-field>    <md-field>
                     <label>Apellidos</label>
-                    <md-input v-model="Usuario.Apellidos"></md-input>
+                    <md-input v-model="Usuario2.apellidos"></md-input>
                     <span class="md-helper-text">Apellidos</span>
                     </md-field>
                     <md-field>
                     <label>Telefono</label>
-                    <md-input  type="number" v-model="Usuario.Telefono"></md-input>
+                    <md-input  type="number" v-model="Usuario2.telefono"></md-input>
                     <span class="md-helper-text">Telefono</span>
                     </md-field>    
                     <md-field>
                     <label>Correo</label>
-                    <md-input v-model="Usuario.Correo"></md-input>
+                    <md-input v-model="Usuario2.correo"></md-input>
                     <span class="md-helper-text">Correo</span>
                     </md-field>
                     <md-field>
                     <label>Contraseña</label>
-                    <md-input type="password" v-model="Usuario.Contrasena"></md-input>
+                    <md-input type="password" v-model="Usuario2.contrasena"></md-input>
                     <span class="md-helper-text">Contraseña</span>
                     </md-field>
-                    <md-button type="submit" :disabled="ssubmit"  v-if="Usuario.id==null" class="md-primary">Registrar</md-button>
-                    <md-button type="submit" :disabled="submit" v-if="Usuario.id!=null" class="md-primary">Actuliza</md-button>
+                    <md-button type="submit" :disabled="ssubmit"  v-if="Usuario2.id==''" class="md-primary">Registrar</md-button>
+                    <md-button type="submit" :disabled="submit" v-if="Usuario2.id!=''" class="md-primary">Actuliza</md-button>
                 </form>
 
             </div>
@@ -53,20 +53,31 @@ export default {
         return {
             registro: true,
             Usuario2:{
-                Id: "",
-                Nombre: "",
-                Apellidos: "",
-                Telefono: "",
-                Correo: "",
-                Contrasena: "",
-                Admin: ""
+                id: "",
+                nombre: "",
+                apellidos: "",
+                telefono: "",
+                correo: "",
+                contrasena: "",
+                admin: ""
             },
+            Usuario3:{
+                id: "",
+                nombre: "",
+                apellidos: "",
+                telefono: "",
+                correo: "",
+                contrasena: "",
+                admin: ""
+            }
         }
                 
     },
     methods:{
         registra(){
-            this.$axios.post('http://localhost:3000/Empleado',this.Usuario)
+            this.$axios.post('http://localhost:3000/Empleado',this.Usuario2,{ headers: { 
+                'Authorization': "Bearer "+localStorage.getItem('token'),
+                'Content-Type': 'application/json' } })
             .then(res=>{
                 if(res.data===true){
                     this.$notify({
@@ -74,6 +85,7 @@ export default {
                     title: 'Exito',
                     text: 'Operacion Exitosa'
                     });
+                    this.Usuario2=this.Usuario3
                 }else{
                     this.$notify({
                     group: 'foo',
@@ -82,13 +94,13 @@ export default {
                     });
                 }
             });
-        this.Usuario="";
+        //this.Usuario2="";
         }
 
     },
     computed:{
         ssubmit: function(){
-            if(this.Usuario.Correo!=""&&this.Usuario.Contrasena!=""){
+            if(this.Usuario2.correo!=""&&this.Usuario2.contrasena!=""){
                 console.log("conputed false")
                 return false
             }
@@ -106,8 +118,7 @@ export default {
         }
     },
     mounted(){
-
-            this.Usuario2= Object.assign({},this.Usuario)
+           this.Usuario2= Object.assign({},this.Usuario)
            
  
         

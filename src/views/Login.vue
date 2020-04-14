@@ -70,11 +70,11 @@ export default {
                     text: 'Porfavor ingrese una contraseña o usuario correcto'
                     });
                 }
-            }).catch(error=>{
+            }).catch(()=>{
                     this.$notify({
                     group: 'foo',
                     title: 'Error al Iniciar sesión',
-                    text: "catch"+error
+                    text: "Credenciales inválidas de autenticación revise su información"
                     });
             });
           

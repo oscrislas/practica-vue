@@ -6,7 +6,7 @@
         <div class="col-10">
             <b-button v-b-modal.modal-1 class="b">Agregar Empleado</b-button>
             <b-button v-on:click="Salir">Salir</b-button>
-            <p>Hola {{Admin.Nombre}} {{Admin.Apellidos}}</p>
+            <p>Hola {{Admin.nombre}} {{Admin.apellidos}}</p>
             
             <br>
             <br>
@@ -22,12 +22,12 @@
                     <th>Borrar</th>
                 </tr>
                 <tr v-for="(e,index) of  User" :key="e.id">
-                    <td>{{e.Nombre}}</td>
-                    <td>{{e.Apellidos}} </td>
-                    <td>{{e.Correo}}</td>
-                    <td>{{e.Telefono | tel}}</td>
-                    <td>{{e.FechaInicio | hora}}</td>
-                    <td>{{e.FechaFin | hora}}</td>
+                    <td>{{e.nombre}}</td>
+                    <td>{{e.apellidos}} </td>
+                    <td>{{e.correo}}</td>
+                    <td>{{e.telefono | tel}}</td>
+                    <td>{{e.fechaInicio | hora}}</td>
+                    <td>{{e.fechaFin | hora}}</td>
                     <th><b-button v-b-modal.modal-2 v-on:click="precionado(index)" class="b">Editar</b-button></th>
                     <th><b-button v-on:click="borrar(e.id)" class="b">Borrar</b-button></th>
                   
@@ -67,13 +67,13 @@ export default {
         return {
             User:[],
             Usuario:{
-                Id: '',
-                Nombre: '',
-                Apellidos: '',
-                Telefono: '',
-                Correo: '',
-                Contrasena: '',
-                Admin: ''
+                id: '',
+                nombre: '',
+                apellidos: '',
+                telefono: '',
+                correo: '',
+                contrasena: '',
+                admin: ''
             },
             row: 0,
             id:0,
@@ -87,22 +87,28 @@ export default {
     },
     filters:{
         hora: function(value){
-            if(value=="Sin Checar"){
-                return "Sin checar"
-            }
-            var ret=value.split(" ");
-            var res =ret[1].split(":");
+            if (value!= undefined){
+                if(value=="Sin Checar"){
+                    return "Sin checar"
+                }
+                var ret=value.split(" ");
+                var res =ret[1].split(":");
 
-         return ((parseInt(res[0], 10)>12)?(parseInt(res[0], 10)-12):(parseInt(res[0], 10)))+":"+res[1]+" "+ (parseInt(res[0], 10)/12>1?"pm":"am")
+            return ((parseInt(res[0], 10)>12)?(parseInt(res[0], 10)-12):(parseInt(res[0], 10)))+":"+res[1]+" "+ (parseInt(res[0], 10)/12>1?"pm":"am")
+            }
+            return "Sin checar"
         },
         tel: function(value){
-            if(value.length==10){
-            value='('+value
-            var uno=value.slice(0, -7);
-            var dos=value.slice(-7,-4);
-            var tres= value.slice(-4)
-            return  uno+') '+dos+" "+tres
+            if (value!= undefined){
+                if(value.length==10){
+                value='('+value
+                var uno=value.slice(0, -7);
+                var dos=value.slice(-7,-4);
+                var tres= value.slice(-4)
+                return  uno+') '+dos+" "+tres
+                }
             }
+
             return "Incorrecto"
 
         }
@@ -112,8 +118,14 @@ export default {
 
         if (localStorage.getItem('token')){
             this.Admin  = VueJwtDecode.decode(localStorage.getItem('token')).Username;
-            this.$axios.get('http://localhost:3000/Empleados')
-                .then(res=>{this.User=res.data});
+            this.$axios.get('http://localhost:3000/Empleados',{ headers: { 
+                'Authorization': "Bearer "+localStorage.getItem('token'),
+                'Content-Type': 'application/json' } })
+                .then(res=>{
+                    console.log(res.data)
+                    this.User=res.data
+
+                    });
 
         }
         else{
@@ -124,10 +136,14 @@ export default {
         precionado(index){
             if(index!=null)
            this.U= this.User[index]
+           else
+           this.U=this.Usuario
         },
         borrar(id){
             console.log("el id es: "+ id)
-            this.$axios.post('http://localhost:3000/borrarEmpleado',id)
+            this.$axios.post('http://localhost:3000/borrarEmpleado',id,{ headers: { 
+                'Authorization': "Bearer "+localStorage.getItem('token'),
+                'Content-Type': 'application/json' } })
             .then(res=>{
                // this.User = JSON.parse(res.data);
             this.User=res.data
@@ -140,7 +156,9 @@ export default {
             this.$router.push('/')
         },
         closemodal(){
-            this.$axios.get('http://localhost:3000/Empleados')
+            this.$axios.get('http://localhost:3000/Empleados',{ headers: { 
+                'Authorization': "Bearer "+localStorage.getItem('token'),
+                'Content-Type': 'application/json' } })
                 .then(res=>{this.User=res.data});
         }
     }
