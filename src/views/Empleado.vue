@@ -25,7 +25,36 @@
             
             <br>
             <br>
-            
+             <md-progress-spinner :md-diameter="100" :md-stroke="10" md-mode="indeterminate" v-if="carga"></md-progress-spinner>
+                <table v-else>
+                <tr>
+                    <th>Hora</th>
+                    <th>Lunes</th>
+                    <th>Marte</th>
+                    <th>Miercoles</th>
+                    <th>Jueves</th>
+                    <th>Viernes</th>
+                </tr>
+                 <tr >
+                     <th>Entrada</th>
+                     <td>{{this.horario.entrada.lunes}}</td>
+                     <td>{{this.horario.entrada.martes}}</td>
+                     <td>{{this.horario.entrada.miercoles}}</td>
+                     <td>{{this.horario.entrada.jueves}}</td>
+                     <td>{{this.horario.entrada.viernes}}</td>
+                     
+                 </tr>
+                 <tr>
+                     <th>
+                         Salida
+                     </th>
+                     <td>{{this.horario.salida.lunes}}</td>
+                     <td>{{this.horario.salida.martes}}</td>
+                     <td>{{this.horario.salida.miercoles}}</td>
+                     <td>{{this.horario.salida.jueves}}</td>
+                     <td>{{this.horario.salida.viernes}}</td>
+                 </tr>
+            </table>
         </div>
         <div class="col-2"></div>
         <notifications group="foo" />
@@ -39,12 +68,29 @@ export default {
     name: 'empleado',
     data(){
         return{
+            carga: true,
             User: {
                 nombre: "",
                 apellidos: "",
                 correo: ""
             },
-            check: false
+            check: false,
+            horario:{
+                entrada:{
+                    lunes:"",
+                    martes:"",
+                    miercoles:"",
+                    jueves:"",
+                    viernes:""
+                },
+                salida:{
+                    lunes:"",
+                    martes:"",
+                    miercoles:"",
+                    jueves:"",
+                    viernes:""
+                }
+            }
         }
     },
 beforeMount(){
@@ -67,6 +113,17 @@ beforeMount(){
                 }else{
                      this.check=false
                 }
+
+            });
+
+            this.$axios.post('http://localhost:3000/valida',this.User,{ headers: { 
+                'Authorization': "Bearer "+localStorage.getItem('token'),
+                'Content-Type': 'application/json' } })
+            .then(res=>{
+                this.horario=res.data
+                this.carga=false
+                console.log("entro carga")
+                
 
             });
        

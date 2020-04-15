@@ -1,9 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Login from '@/views/Login'
-import admin from '@/views/Admin'
-import cliente from '@/views/Empleado'
-import Error  from '@/views/Error'
 Vue.use(Router)
 
 export default new Router({
@@ -11,22 +7,22 @@ export default new Router({
     routes: [{
         path: '/',
         name: 'Login',
-        component: Login
+        component: ()=> import(/* webpackChunkName: "Login" */ '@/views/Login')
     },
     {
         path: '/admin',
         name: 'admin',
-        component: admin
+        component: ()=> import(/* webpackChunkName: "admin" */'@/views/Admin')
     },
     {
         path: '/user',
         name: 'empleado',
-        component: cliente
+        component: ()=> import(/* webpackChunkName: "user" */'@/views/Empleado')
     },
     {
         path: '*',
         name: 'Error',
-        component: Error
+        component: ()=> import(/* webpackChunkName: "Error" */'@/views/Error')
     }
     ]
 })
