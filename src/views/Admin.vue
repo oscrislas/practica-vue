@@ -23,22 +23,22 @@
                 <tr>
                     <th>Nombre</th>
                     <th>Apellido</th>
-                    <th>Correo</th>
-                    <th>Telefono</th>
+                    <th class="priority-5" >Correo</th>
+                    <th class="priority-4" >Telefono</th>
                     <th>Entrada</th>
                     <th>Salida</th>
-                    <th>Editar</th>
-                    <th>Borrar</th>
+                    <th class="priority-3">Editar</th>
+                    <th class="priority-3">Borrar</th>
                 </tr>
                 <tr v-for="(e,index) of  User" :key="e.id">
                     <td>{{e.nombre}}</td>
-                    <td>{{e.apellidos}} </td>
-                    <td>{{e.correo}}</td>
-                    <td>{{e.telefono | tel}}</td>
+                    <td >{{e.apellidos}} </td>
+                    <td class="priority-5">{{e.correo}}</td>
+                    <td class="priority-4">{{e.telefono | tel}}</td>
                     <td>{{e.fechaInicio | hora}}</td>
                     <td>{{e.fechaFin | hora}}</td>
-                    <td> <b-button v-b-modal.modal-2 v-on:click="precionado(index)" >Editar</b-button></td>
-                    <td><b-button v-on:click="borrar(e.id)" >Borrar</b-button></td>
+                    <td class="priority-3"> <b-button v-b-modal.modal-2 v-on:click="precionado(index)" >Editar</b-button></td>
+                    <td class="priority-3"><b-button v-on:click="borrar(e.id)" >Borrar</b-button></td>
                   
                 </tr>
             </table>
@@ -179,43 +179,6 @@ this.Admin  = VueJwtDecode.decode(localStorage.getItem('token')).Username;
 </script>
 
 <style scoped>
-table{
-border-collapse: separate !important;
-      opacity: .8 !important;
-    font-size: 15px;
-  text-align: left;
-  color: aliceblue;
-  border-radius: 15px;
-  border: solid black;
-background-color: #001F49;
-  position: absolute;
-  width: 100%;
-  margin:  auto;
-
-}
-th{
-  padding: 10px;
-  text-align: left;
-  
-  background-color: black;
-}
-td{
-    padding-left: 10px;
-    text-align: left;
-
-  border: solid black;
-
-}
-
-tr:hover {
-    background-color: #01295F;
-    border-radius: 100% solid black;
-}
-
-h1{
-  position: absolute;
-  left: 10px;
-}
 
 .b{
 position: absolute;
@@ -224,6 +187,49 @@ position: absolute;
   height: auto;
   display: inline;
 }
+
+@media screen and (max-width: 1225px) and (min-width: 1045px) {
+                .priority-5{
+                        display:none;
+                }
+        }
+        
+        @media screen and (max-width: 1045px) and (min-width: 835px) {
+                .priority-5{
+                        display:none;
+                }
+                .priority-4{
+                        display:none;
+                }
+        }
+        
+        @media screen and (max-width: 835px) and (min-width: 300px) {
+                .priority-5{
+                        display:none;
+                }
+                .priority-4{
+                        display:none;
+                }
+                .priority-3{
+                        display:none;
+                }
+        }
+        
+        @media screen and (max-width: 300px) {
+                .priority-5{
+                        display:none;
+                }
+                .priority-4{
+                        display:none;
+                }
+                .priority-3{
+                        display:none;
+                }
+                .priority-2{
+                        display:none;
+                }
+        
+        }
 
 
 

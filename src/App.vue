@@ -25,6 +25,8 @@ export default {
   background-image: url('./assets/b.jpg');
   background-repeat: repeat;
   background-size: cover;
+ 
+
   width: 100%;
   height: 1000px;
  
@@ -49,18 +51,19 @@ export default {
 }
 table{
 border-collapse: separate !important;
-      opacity: .8 !important;
-    font-size: 15px;
-  text-align: left;
-  color: aliceblue;
-  border-radius: 15px;
-  border: solid black;
+opacity: .8 !important;
+font-size: 15px;
+text-align: left;
+color: aliceblue;
+border-radius: 15px;
+border: solid black;
 background-color: #001F49;
-  position: absolute;
-  width: 100%;
-  margin:  auto;
-
+position: absolute;
+width: 100%;
+margin:  auto;
+height: auto;
 }
+
 th{
   padding: 10px;
   text-align: left;
@@ -79,5 +82,7 @@ tr:hover {
     background-color: #01295F;
     border-radius: 100% solid black;
 }
+
+
 
 </style>

@@ -74,7 +74,7 @@ export default {
                     this.$notify({
                     group: 'foo',
                     title: 'Error al Iniciar sesión',
-                    text: "Credenciales inválidas de autenticación revise su información"
+                    text: "Error al conectar con el servidor "
                     });
             });
           

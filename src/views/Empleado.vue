@@ -9,9 +9,9 @@
         </div>
     <br>
     <div class="row">
-        <div class="col-2"></div>
+        <div class="col-lg-2 col-sm-12" ></div>
         <br>
-        <div class="col-4">
+        <div class="col-lg-2 col-sm-12">
             <p v-if="check==false"> preciona el buton para checar tu hora de entrada</p>
             <p  v-else>Hola {{User.nombre}} {{User.apellidos}} preciona el buton para checar tu hora de salida</p>
                <b-button class="bb" v-on:click="Entrada" v-if="check==false">  Checar Entrada
@@ -21,7 +21,7 @@
         </div>
 
      
-        <div class="col-4">
+        <div class="col-lg-6 col-sm-12 d-none d-sm-none d-md-block">
             
             <br>
             <br>
@@ -56,7 +56,7 @@
                  </tr>
             </table>
         </div>
-        <div class="col-2"></div>
+        <div class="col-lg-2 col-sm-6"></div>
         <notifications group="foo" />
     </div>
 </div>
